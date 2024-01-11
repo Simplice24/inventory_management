@@ -26,7 +26,7 @@
                 <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $totalMaterialQuantity }}</div>
               </div>
               <div class="col-auto">
-                <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                <i class="fas fa-box fa-2x text-gray-300"></i>
               </div>
             </div>
           </div>
@@ -44,7 +44,7 @@
                 <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $totalRawMaterialQuantity }}</div>
               </div>
               <div class="col-auto">
-                <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                <i class="fas fa-box fa-2x text-gray-300"></i>
               </div>
             </div>
           </div>
@@ -87,7 +87,7 @@
               <div class="col mr-2">
                 <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
                   Pending Requests</div>
-                <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
+                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $totalPendingRequest }}</div>
               </div>
               <div class="col-auto">
                 <i class="fas fa-comments fa-2x text-gray-300"></i>
