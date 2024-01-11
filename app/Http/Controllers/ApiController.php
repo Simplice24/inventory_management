@@ -21,31 +21,67 @@ class ApiController extends Controller
         return response()->json($user);
     }
 
+    // public function userUpdate(Request $request, $id)
+    // {
+    //     // Validate the request data
+    //     $request->validate([
+    //         'name' => 'required|string|max:255',
+    //         'email' => 'required|string|email|max:255|unique:users,email,' . $id,
+    //         'password' => 'sometimes|string|min:8' 
+    //     ]);
+
+    //     // Find the user by ID
+    //     $user = User::findOrFail($id);
+
+    //     // Update the user's information
+    //     $user->name = $request->name;
+    //     $user->email = $request->email;
+
+    //     // Update the password only if it's provided
+    //     if ($request->filled('password')) {
+    //         $user->password = Hash::make($request->password);
+    //     }
+
+    //     $user->save();
+
+    //     return response()->json(['message' => 'User updated successfully!', 'user' => $user]);
+    // }
+
     public function userUpdate(Request $request, $id)
     {
-        // Validate the request data
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users,email,' . $id,
-            'password' => 'sometimes|string|min:8' 
-        ]);
-
-        // Find the user by ID
-        $user = User::findOrFail($id);
-
-        // Update the user's information
-        $user->name = $request->name;
-        $user->email = $request->email;
-
-        // Update the password only if it's provided
-        if ($request->filled('password')) {
-            $user->password = Hash::make($request->password);
+        try {
+            // Validate the request data
+            $request->validate([
+                'name' => 'required|string|max:255',
+                'email' => 'required|string|email|max:255|unique:users,email,' . $id,
+                'password' => 'sometimes|string|min:8'
+            ]);
+    
+            // Find the user by ID or fail with a custom response
+            $user = User::find($id);
+            if (!$user) {
+                return response()->json(['error' => 'User not found with the provided ID'], 404);
+            }
+    
+            // Update the user's information
+            $user->name = $request->name;
+            $user->email = $request->email;
+    
+            // Update the password only if it's provided
+            if ($request->filled('password')) {
+                $user->password = Hash::make($request->password);
+            }
+    
+            $user->save();
+    
+            return response()->json(['message' => 'User updated successfully!', 'user' => $user]);
+        } catch (\Exception $e) {
+            // Return a generic error response
+            return response()->json(['error' => 'User not found with the provided ID'], 400);
         }
-
-        $user->save();
-
-        return response()->json(['message' => 'User updated successfully!', 'user' => $user]);
     }
+    
+
 
     public function deleteUser($id){
         $user = User::find($id);
